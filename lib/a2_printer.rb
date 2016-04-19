@@ -40,15 +40,15 @@ class A2Printer
   end
 
   def feed_rows(rows = 0)
-    @connection.write_bytes(ESC_SEQUENCE, 74, rows)
+    write_bytes(ESC_SEQUENCE, 74, rows)
   end
 
   def flush
-    @connection.write_bytes(12)
+    write_bytes(12)
   end
 
   def test_page
-    @connection.write_bytes(18, 84)
+    write_bytes(18, 84)
   end
 
   def print(string)
@@ -61,7 +61,7 @@ class A2Printer
 
   def write(char)
     return if not_allowed? char
-    @connection.write_bytes(char)
+    write_bytes(char)
   end
 
   def print_bitmap(*args)
@@ -85,6 +85,8 @@ class A2Printer
         @barcode.send(name,*args)
       elsif @print_mode.respond_to?name
         @print_mode.send(name,*args)
+      elsif @connection.respond_to?name
+        @connection.send(name,*args)
       end
     rescue NoMethodError   
       puts "error en el metodo"
@@ -105,8 +107,8 @@ class A2Printer
   end
 
   def modify_density setting
-    @connection.write_bytes(18, 35)
-    @connection.write_bytes(setting)
+    write_bytes(18, 35)
+    write_bytes(setting)
   end
 
   def calculate_density_setting
