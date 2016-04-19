@@ -83,6 +83,8 @@ class A2Printer
         @format.send(name,*args)
       elsif @barcode.respond_to?name
         @barcode.send(name,*args)
+      elsif @print_mode.respond_to?name
+        @print_mode.send(name,*args)
       end
     rescue NoMethodError   
       puts "error en el metodo"
@@ -115,10 +117,6 @@ class A2Printer
 
   def not_allowed? char
     char == NOT_ALLOWED_CHAR
-  end
-
-  def normal
-    @print_mode.normal
   end
 
   def obtain_bitmap *args
