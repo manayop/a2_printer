@@ -76,20 +76,18 @@ class A2Printer
   end
 
   def method_missing(name,*args)
-    begin
-      if @control.respond_to?name
-        @control.send(name,*args)
-      elsif @format.respond_to?name
-        @format.send(name,*args)
-      elsif @barcode.respond_to?name
-        @barcode.send(name,*args)
-      elsif @print_mode.respond_to?name
-        @print_mode.send(name,*args)
-      elsif @connection.respond_to?name
-        @connection.send(name,*args)
-      end
-    rescue NoMethodError   
-      puts "error en el metodo"
+    if @control.respond_to?name
+      @control.send(name,*args)
+    elsif @format.respond_to?name
+      @format.send(name,*args)
+    elsif @barcode.respond_to?name
+      @barcode.send(name,*args)
+    elsif @print_mode.respond_to?name
+      @print_mode.send(name,*args)
+    elsif @connection.respond_to?name
+      @connection.send(name,*args)
+    else
+      puts "#{name} method not exists"
     end
   end
 
