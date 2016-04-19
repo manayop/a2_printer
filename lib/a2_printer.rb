@@ -71,14 +71,6 @@ class A2Printer
     bitmap.print
   end
 
-  def set_barcode_height(height)
-    @barcode.set_height height
-  end
-
-  def print_barcode(text, type)
-    @barcode.print text, type
-  end
-
   def set_default
     reset_formatting
   end
@@ -89,6 +81,8 @@ class A2Printer
         @control.send(name,*args)
       elsif @format.respond_to?name
         @format.send(name,*args)
+      elsif @barcode.respond_to?name
+        @barcode.send(name,*args)
       end
     rescue NoMethodError   
       puts "error en el metodo"

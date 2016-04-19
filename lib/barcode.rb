@@ -4,11 +4,11 @@ class Barcode
     @connection = connection
   end
 
-  def set_height(height)
+  def set_barcode_height(height)
     @connection.write_bytes(29, 104, height)
   end
 
-  def print(text, type)
+  def print_barcode(text, type)
     set_type type
     print text
     end_print
