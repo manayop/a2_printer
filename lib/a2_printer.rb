@@ -79,15 +79,13 @@ class A2Printer
 
     objects = [@control,@format,@barcode,@print_mode,@connection]
 
-    find = false
     objects.each do |object|
       if object.respond_to?name
-        find = true
-        object.send(name,*args)
+        return object.send(name,*args)
       end
     end
 
-    puts "#{name} method not exists" if !find
+    puts "#{name} method not exists"
 
   end
 
