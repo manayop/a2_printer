@@ -108,4 +108,4 @@ class Bitmap
       tmp = @data.getbyte
       @height = (@data.getbyte << 8) + tmp
     end
-  end
+end

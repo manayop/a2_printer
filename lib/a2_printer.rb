@@ -24,7 +24,7 @@ class A2Printer
 
   def begin(heat_time)
     reset
-    @control.set_parameters heat_time
+    set_parameters heat_time
     modify_density(calculate_density_setting)
   end
 
@@ -95,28 +95,18 @@ class A2Printer
     @barcode.print text, type
   end
 
-  def offline
-    @control.offline
-  end
-
-  def online
-    @control.online
-  end
-
-  def sleep
-    @control.sleep
-  end
-
-  def wake
-    @control.wake
-  end
-
-  def reset
-    @control.reset
-  end
-
   def set_default
     reset_formatting
+  end
+
+  def method_missing(name,*args)
+    begin
+      if @control.respond_to?(name)
+        @control.send(name,*args)
+      end
+    rescue NoMethodError   
+      puts "error en el metodo"
+    end
   end
 
   private
