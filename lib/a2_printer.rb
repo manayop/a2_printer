@@ -31,7 +31,7 @@ class A2Printer
   def reset_formatting
     online
     normal
-    @format.reset
+    reset_format
     set_default_heights
   end
 
@@ -64,22 +64,6 @@ class A2Printer
     @connection.write_bytes(char)
   end
 
-  def set_size(size)
-    @format.set_size size
-  end
-
-  def underline_on(weight)
-    @format.underline_on weight
-  end
-
-  def underline_off
-    @format.underline_off
-  end
-
-  def justify(position)
-    @format.justify position
-  end
-
   def print_bitmap(*args)
     bitmap = obtain_bitmap *args
 
@@ -101,8 +85,10 @@ class A2Printer
 
   def method_missing(name,*args)
     begin
-      if @control.respond_to?(name)
+      if @control.respond_to?name
         @control.send(name,*args)
+      elsif @format.respond_to?name
+        @format.send(name,*args)
       end
     rescue NoMethodError   
       puts "error en el metodo"
